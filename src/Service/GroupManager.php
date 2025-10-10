@@ -8,13 +8,14 @@ use Fastfony\IdentityBundle\Repository\GroupRepository;
 class GroupManager
 {
     public function __construct(
-        private GroupRepository $groupRepository
+        private GroupRepository $groupRepository,
+        private string $groupClass
     ) {
     }
 
     public function createGroup(string $name, ?string $description = null): Group
     {
-        $groupClass = $this->groupRepository->getClassName();
+        $groupClass = $this->groupClass;
         $group = new $groupClass();
         
         $group->setName($name);

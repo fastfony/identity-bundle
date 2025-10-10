@@ -13,12 +13,18 @@ services:
     # Services
     Fastfony\IdentityBundle\Service\UserManager:
         public: true
+        arguments:
+            $userClass: '%fastfony_identity.user.class%'
 
     Fastfony\IdentityBundle\Service\RoleManager:
         public: true
+        arguments:
+            $roleClass: '%fastfony_identity.role.class%'
 
     Fastfony\IdentityBundle\Service\GroupManager:
         public: true
+        arguments:
+            $groupClass: '%fastfony_identity.group.class%'
 
     # Event Listeners
     Fastfony\IdentityBundle\EventListener\LoginListener:

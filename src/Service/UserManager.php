@@ -10,13 +10,14 @@ class UserManager
 {
     public function __construct(
         private UserRepository $userRepository,
-        private UserPasswordHasherInterface $passwordHasher
+        private UserPasswordHasherInterface $passwordHasher,
+        private string $userClass
     ) {
     }
 
     public function createUser(string $email, string $plainPassword, ?string $username = null): User
     {
-        $userClass = $this->userRepository->getClassName();
+        $userClass = $this->userClass;
         $user = new $userClass();
         
         $user->setEmail($email);
