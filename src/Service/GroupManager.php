@@ -15,8 +15,7 @@ class GroupManager
 
     public function createGroup(string $name, ?string $description = null): Group
     {
-        $groupClass = $this->groupClass;
-        $group = new $groupClass();
+        $group = new ($this->groupClass)();
         
         $group->setName($name);
         if ($description) {

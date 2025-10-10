@@ -15,8 +15,7 @@ class RoleManager
 
     public function createRole(string $name, ?string $description = null): Role
     {
-        $roleClass = $this->roleClass;
-        $role = new $roleClass();
+        $role = new ($this->roleClass)();
         
         $role->setName($name);
         if ($description) {

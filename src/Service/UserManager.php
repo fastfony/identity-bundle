@@ -17,8 +17,7 @@ class UserManager
 
     public function createUser(string $email, string $plainPassword, ?string $username = null): User
     {
-        $userClass = $this->userClass;
-        $user = new $userClass();
+        $user = new ($this->userClass)();
         
         $user->setEmail($email);
         if ($username) {
