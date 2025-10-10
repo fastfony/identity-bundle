@@ -1,0 +1,26 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Fastfony\IdentityBundle\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/FastfonyIdentityBundle.php'
+
+    # Services
+    Fastfony\IdentityBundle\Service\UserManager:
+        public: true
+
+    Fastfony\IdentityBundle\Service\RoleManager:
+        public: true
+
+    Fastfony\IdentityBundle\Service\GroupManager:
+        public: true
+
+    # Event Listeners
+    Fastfony\IdentityBundle\EventListener\LoginListener:
+        tags:
+            - { name: kernel.event_subscriber }

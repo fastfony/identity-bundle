@@ -1,0 +1,21 @@
+# Example configuration for FastfonyIdentityBundle
+# Add this to your config/packages/fastfony_identity.yaml
+
+fastfony_identity:
+    user:
+        # Your custom User entity class
+        class: 'App\Entity\User'
+        # Whether to store email in canonical (lowercase) form
+        email_canonical: true
+
+    role:
+        # Your custom Role entity class
+        class: 'App\Entity\Role'
+        # Default role assigned to new users
+        default_role: 'ROLE_USER'
+
+    group:
+        # Your custom Group entity class
+        class: 'App\Entity\Group'
+        # Enable/disable group functionality
+        enabled: true
