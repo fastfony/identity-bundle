@@ -1,34 +1,39 @@
 <?php
 
-namespace Fastfony\IdentityBundle\Entity;
+namespace Fastfony\IdentityBundle\Entity\Identity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\MappedSuperclass]
-abstract class Role
+abstract class Group
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column]
     protected ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 50, unique: true)]
+    #[ORM\Column(length: 100, unique: true)]
     protected string $name;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     protected ?string $description = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'roles')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'groups')]
     protected Collection $users;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\ManyToMany(targetEntity: Role::class)]
+    #[ORM\JoinTable(name: 'group_roles')]
+    protected Collection $roles;
+
+    #[ORM\Column]
     protected \DateTimeImmutable $createdAt;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->roles = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
     }
 
@@ -45,6 +50,7 @@ abstract class Role
     public function setName(string $name): self
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -56,6 +62,7 @@ abstract class Role
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -68,7 +75,7 @@ abstract class Role
     {
         if (!$this->users->contains($user)) {
             $this->users->add($user);
-            $user->addRole($this);
+            $user->addGroup($this);
         }
 
         return $this;
@@ -78,8 +85,29 @@ abstract class Role
     {
         if ($this->users->contains($user)) {
             $this->users->removeElement($user);
-            $user->removeRole($this);
+            $user->removeGroup($this);
         }
+
+        return $this;
+    }
+
+    public function getRoles(): Collection
+    {
+        return $this->roles;
+    }
+
+    public function addRole(Role $role): self
+    {
+        if (!$this->roles->contains($role)) {
+            $this->roles->add($role);
+        }
+
+        return $this;
+    }
+
+    public function removeRole(Role $role): self
+    {
+        $this->roles->removeElement($role);
 
         return $this;
     }
@@ -92,6 +120,7 @@ abstract class Role
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Fastfony\IdentityBundle\Service;
+namespace Fastfony\IdentityBundle\Manager;
 
-use Fastfony\IdentityBundle\Entity\User;
+use Fastfony\IdentityBundle\Entity\Identity\User;
 use Fastfony\IdentityBundle\Repository\UserRepository;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -26,7 +26,7 @@ class UserManager
         
         $hashedPassword = $this->passwordHasher->hashPassword($user, $plainPassword);
         $user->setPassword($hashedPassword);
-        
+
         return $user;
     }
 

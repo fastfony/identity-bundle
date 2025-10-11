@@ -1,13 +1,13 @@
 <?php
 
-namespace Fastfony\IdentityBundle\EventListener;
+namespace Fastfony\IdentityBundle\EventSubscriber;
 
-use Fastfony\IdentityBundle\Entity\User;
-use Fastfony\IdentityBundle\Service\UserManager;
+use Fastfony\IdentityBundle\Entity\Identity\User;
+use Fastfony\IdentityBundle\Manager\UserManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
-class LoginListener implements EventSubscriberInterface
+class LoginSubscriber implements EventSubscriberInterface
 {
     public function __construct(
         private UserManager $userManager

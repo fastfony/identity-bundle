@@ -2,7 +2,7 @@
 
 namespace Fastfony\IdentityBundle\Repository;
 
-use Fastfony\IdentityBundle\Entity\Group;
+use Fastfony\IdentityBundle\Entity\Identity\Group;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -11,27 +11,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 abstract class GroupRepository extends ServiceEntityRepository
 {
+    use PersistenceTrait;
+
     public function __construct(ManagerRegistry $registry, string $entityClass)
     {
         parent::__construct($registry, $entityClass);
-    }
-
-    public function save(Group $group, bool $flush = false): void
-    {
-        $this->getEntityManager()->persist($group);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
-    public function remove(Group $group, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($group);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
     }
 
     public function findByName(string $name): ?Group

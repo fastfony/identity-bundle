@@ -10,23 +10,18 @@ services:
             - '../src/Entity/'
             - '../src/FastfonyIdentityBundle.php'
 
-    # Services
-    Fastfony\IdentityBundle\Service\UserManager:
+    # Manager services with injected entity class names
+    Fastfony\IdentityBundle\Manager\UserManager:
         public: true
         arguments:
             $userClass: '%fastfony_identity.user.class%'
 
-    Fastfony\IdentityBundle\Service\RoleManager:
+    Fastfony\IdentityBundle\Manager\RoleManager:
         public: true
         arguments:
             $roleClass: '%fastfony_identity.role.class%'
 
-    Fastfony\IdentityBundle\Service\GroupManager:
+    Fastfony\IdentityBundle\Manager\GroupManager:
         public: true
         arguments:
             $groupClass: '%fastfony_identity.group.class%'
-
-    # Event Listeners
-    Fastfony\IdentityBundle\EventListener\LoginListener:
-        tags:
-            - { name: kernel.event_subscriber }

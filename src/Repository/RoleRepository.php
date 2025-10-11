@@ -2,7 +2,7 @@
 
 namespace Fastfony\IdentityBundle\Repository;
 
-use Fastfony\IdentityBundle\Entity\Role;
+use Fastfony\IdentityBundle\Entity\Identity\Role;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -11,27 +11,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 abstract class RoleRepository extends ServiceEntityRepository
 {
+    use PersistenceTrait;
+
     public function __construct(ManagerRegistry $registry, string $entityClass)
     {
         parent::__construct($registry, $entityClass);
-    }
-
-    public function save(Role $role, bool $flush = false): void
-    {
-        $this->getEntityManager()->persist($role);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
-
-    public function remove(Role $role, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($role);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
     }
 
     public function findByName(string $name): ?Role

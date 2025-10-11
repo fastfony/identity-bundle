@@ -1,8 +1,8 @@
 <?php
 
-namespace Fastfony\IdentityBundle\Service;
+namespace Fastfony\IdentityBundle\Manager;
 
-use Fastfony\IdentityBundle\Entity\Group;
+use Fastfony\IdentityBundle\Entity\Identity\Group;
 use Fastfony\IdentityBundle\Repository\GroupRepository;
 
 class GroupManager
@@ -21,7 +21,7 @@ class GroupManager
         if ($description) {
             $group->setDescription($description);
         }
-        
+
         return $group;
     }
 
