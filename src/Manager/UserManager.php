@@ -4,6 +4,7 @@ namespace Fastfony\IdentityBundle\Manager;
 
 use Fastfony\IdentityBundle\Entity\Identity\User;
 use Fastfony\IdentityBundle\Repository\UserRepository;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserManager
@@ -11,11 +12,12 @@ class UserManager
     public function __construct(
         private UserRepository $userRepository,
         private UserPasswordHasherInterface $passwordHasher,
+        #[Autowire('%fastfony_identity.user.class%')]
         private string $userClass
     ) {
     }
 
-    public function createUser(string $email, string $plainPassword, ?string $username = null): User
+    public function create(string $email, string $plainPassword, ?string $username = null): User
     {
         $user = new ($this->userClass)();
         
@@ -37,13 +39,13 @@ class UserManager
         $user->setUpdatedAt(new \DateTimeImmutable());
     }
 
-    public function enableUser(User $user): void
+    public function enable(User $user): void
     {
         $user->setEnabled(true);
         $user->setUpdatedAt(new \DateTimeImmutable());
     }
 
-    public function disableUser(User $user): void
+    public function disable(User $user): void
     {
         $user->setEnabled(false);
         $user->setUpdatedAt(new \DateTimeImmutable());
@@ -54,23 +56,23 @@ class UserManager
         $user->setLastLogin(new \DateTimeImmutable());
     }
 
-    public function findUserByEmail(string $email): ?User
+    public function findByEmail(string $email): ?User
     {
         return $this->userRepository->findByEmail($email);
     }
 
-    public function findUserByUsername(string $username): ?User
+    public function findByUsername(string $username): ?User
     {
         return $this->userRepository->findByUsername($username);
     }
 
-    public function saveUser(User $user, bool $flush = true): void
+    public function save(User $user): void
     {
-        $this->userRepository->save($user, $flush);
+        $this->userRepository->save($user, true);
     }
 
-    public function deleteUser(User $user, bool $flush = true): void
+    public function delete(User $user): void
     {
-        $this->userRepository->remove($user, $flush);
+        $this->userRepository->remove($user, true);
     }
 }

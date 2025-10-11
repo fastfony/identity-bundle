@@ -4,16 +4,18 @@ namespace Fastfony\IdentityBundle\Manager;
 
 use Fastfony\IdentityBundle\Entity\Identity\Role;
 use Fastfony\IdentityBundle\Repository\RoleRepository;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class RoleManager
 {
     public function __construct(
         private RoleRepository $roleRepository,
+        #[Autowire('%fastfony_identity.role.class%')]
         private string $roleClass
     ) {
     }
 
-    public function createRole(string $name, ?string $description = null): Role
+    public function create(string $name, ?string $description = null): Role
     {
         $role = new ($this->roleClass)();
         
@@ -25,23 +27,23 @@ class RoleManager
         return $role;
     }
 
-    public function findRoleByName(string $name): ?Role
+    public function findByName(string $name): ?Role
     {
         return $this->roleRepository->findByName($name);
     }
 
-    public function getAllRoles(): array
+    public function getAll(): array
     {
         return $this->roleRepository->findAllOrdered();
     }
 
-    public function saveRole(Role $role, bool $flush = true): void
+    public function save(Role $role): void
     {
-        $this->roleRepository->save($role, $flush);
+        $this->roleRepository->save($role, true);
     }
 
-    public function deleteRole(Role $role, bool $flush = true): void
+    public function delete(Role $role): void
     {
-        $this->roleRepository->remove($role, $flush);
+        $this->roleRepository->remove($role, true);
     }
 }

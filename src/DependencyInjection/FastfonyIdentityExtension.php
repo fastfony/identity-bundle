@@ -16,11 +16,9 @@ class FastfonyIdentityExtension extends Extension
 
         // Store configuration in container parameters
         $container->setParameter('fastfony_identity.user.class', $config['user']['class']);
-        $container->setParameter('fastfony_identity.user.email_canonical', $config['user']['email_canonical']);
         $container->setParameter('fastfony_identity.role.class', $config['role']['class']);
         $container->setParameter('fastfony_identity.role.default_role', $config['role']['default_role']);
         $container->setParameter('fastfony_identity.group.class', $config['group']['class']);
-        $container->setParameter('fastfony_identity.group.enabled', $config['group']['enabled']);
 
         // Load services
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));

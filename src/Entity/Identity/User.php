@@ -11,6 +11,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\MappedSuperclass]
 abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    protected static string $defaultRole = 'ROLE_USER';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -105,8 +107,8 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
             $roles[] = $role->getName();
         }
         
-        // Guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        // Guarantee every user at least has the default role
+        $roles[] = static::$defaultRole;
 
         return array_unique($roles);
     }
