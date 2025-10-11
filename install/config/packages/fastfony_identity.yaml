@@ -1,0 +1,8 @@
+fastfony_identity:
+    user:
+        class: 'App\Entity\User'
+    role:
+        class: 'App\Entity\Role'
+        default_role: 'ROLE_USER'
+    group:
+        class: 'App\Entity\Group'
