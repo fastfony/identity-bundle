@@ -81,7 +81,7 @@ use App\Repository\UserRepository;
 class User extends BaseUser
 {
     // Add custom fields here
-    // Note: createdAt and updatedAt are automatically managed by TimestampableEntity trait
+    // Note: createdAt and updatedAt are automatically managed by the Timestampable trait
 }
 ```
 
@@ -396,7 +396,7 @@ The bundle provides the following manager services:
   - `findByName()`: Find group by name
   - `getAll()`: Get all groups ordered by name
 
-All managers are auto-wired and can be injected into your controllers and services using the `#[Autowire]` attribute.
+All managers are auto-wired and can be injected into your controllers and services. The managers use the `#[Autowire]` attribute internally for configuration parameter injection.
 
 ## Events
 
