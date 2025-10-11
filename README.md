@@ -19,6 +19,9 @@ Install the bundle via Composer:
 composer require fastfony/identity-bundle
 ```
 
+This will automatically install the required dependencies including:
+- `stof/doctrine-extensions-bundle` for automatic timestamp management
+
 ## Configuration
 
 ### 1. Enable the Bundle
@@ -29,6 +32,7 @@ If you're using Symfony Flex, the bundle will be automatically enabled. Otherwis
 return [
     // ...
     Fastfony\IdentityBundle\FastfonyIdentityBundle::class => ['all' => true],
+    Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
 ];
 ```
 
@@ -40,13 +44,21 @@ Create a configuration file `config/packages/fastfony_identity.yaml`:
 fastfony_identity:
     user:
         class: 'App\Entity\User'
-        email_canonical: true
     role:
         class: 'App\Entity\Role'
         default_role: 'ROLE_USER'
     group:
         class: 'App\Entity\Group'
-        enabled: true
+```
+
+Configure Doctrine Extensions in `config/packages/stof_doctrine_extensions.yaml`:
+
+```yaml
+stof_doctrine_extensions:
+    default_locale: en_US
+    orm:
+        default:
+            timestampable: true
 ```
 
 ### 3. Create Your Entities
@@ -69,6 +81,7 @@ use App\Repository\UserRepository;
 class User extends BaseUser
 {
     // Add custom fields here
+    // Note: createdAt and updatedAt are automatically managed by TimestampableEntity trait
 }
 ```
 
@@ -129,6 +142,8 @@ class UserRepository extends BaseUserRepository
     {
         parent::__construct($registry, User::class);
     }
+    
+    // Add custom query methods here
 }
 ```
 
@@ -220,32 +235,32 @@ class YourController
     public function createUser(): void
     {
         // Create a new user
-        $user = $this->userManager->createUser(
+        $user = $this->userManager->create(
             'user@example.com',
             'password123',
             'username'
         );
         
-        $this->userManager->saveUser($user);
+        $this->userManager->save($user);
     }
 
     public function updatePassword(): void
     {
-        $user = $this->userManager->findUserByEmail('user@example.com');
+        $user = $this->userManager->findByEmail('user@example.com');
         
         if ($user) {
             $this->userManager->updatePassword($user, 'newpassword');
-            $this->userManager->saveUser($user);
+            $this->userManager->save($user);
         }
     }
 
     public function disableUser(): void
     {
-        $user = $this->userManager->findUserByEmail('user@example.com');
+        $user = $this->userManager->findByEmail('user@example.com');
         
         if ($user) {
-            $this->userManager->disableUser($user);
-            $this->userManager->saveUser($user);
+            $this->userManager->disable($user);
+            $this->userManager->save($user);
         }
     }
 }
@@ -264,22 +279,22 @@ class YourController
 
     public function createRole(): void
     {
-        $role = $this->roleManager->createRole(
+        $role = $this->roleManager->create(
             'ROLE_ADMIN',
             'Administrator role'
         );
         
-        $this->roleManager->saveRole($role);
+        $this->roleManager->save($role);
     }
 
     public function assignRole(): void
     {
-        $role = $this->roleManager->findRoleByName('ROLE_ADMIN');
-        $user = $this->userManager->findUserByEmail('user@example.com');
+        $role = $this->roleManager->findByName('ROLE_ADMIN');
+        $user = $this->userManager->findByEmail('user@example.com');
         
         if ($role && $user) {
             $user->addRole($role);
-            $this->userManager->saveUser($user);
+            $this->userManager->save($user);
         }
     }
 }
@@ -298,22 +313,22 @@ class YourController
 
     public function createGroup(): void
     {
-        $group = $this->groupManager->createGroup(
+        $group = $this->groupManager->create(
             'Developers',
             'Development team'
         );
         
-        $this->groupManager->saveGroup($group);
+        $this->groupManager->save($group);
     }
 
     public function addUserToGroup(): void
     {
-        $group = $this->groupManager->findGroupByName('Developers');
-        $user = $this->userManager->findUserByEmail('user@example.com');
+        $group = $this->groupManager->findByName('Developers');
+        $user = $this->userManager->findByEmail('user@example.com');
         
         if ($group && $user) {
             $group->addUser($user);
-            $this->groupManager->saveGroup($group);
+            $this->groupManager->save($group);
         }
     }
 }
@@ -330,8 +345,8 @@ class YourController
 - `enabled`: Account status
 - `roles`: Many-to-many relation with Role
 - `groups`: Many-to-many relation with Group
-- `createdAt`: Account creation timestamp
-- `updatedAt`: Last update timestamp
+- `createdAt`: Account creation timestamp (auto-managed by Timestampable trait)
+- `updatedAt`: Last update timestamp (auto-managed by Timestampable trait)
 - `lastLogin`: Last login timestamp
 
 ### Role Entity
@@ -340,7 +355,8 @@ class YourController
 - `name`: Unique role name (e.g., ROLE_ADMIN)
 - `description`: Optional description
 - `users`: Many-to-many relation with User
-- `createdAt`: Creation timestamp
+- `createdAt`: Creation timestamp (auto-managed by Timestampable trait)
+- `updatedAt`: Last update timestamp (auto-managed by Timestampable trait)
 
 ### Group Entity
 
@@ -349,17 +365,38 @@ class YourController
 - `description`: Optional description
 - `users`: Many-to-many relation with User
 - `roles`: Many-to-many relation with Role
-- `createdAt`: Creation timestamp
+- `createdAt`: Creation timestamp (auto-managed by Timestampable trait)
+- `updatedAt`: Last update timestamp (auto-managed by Timestampable trait)
 
 ## Managers
 
 The bundle provides the following manager services:
 
 - **UserManager**: User CRUD operations and password management
-- **RoleManager**: Role CRUD operations
-- **GroupManager**: Group CRUD operations
+  - `create()`: Create a new user
+  - `save()`: Persist user to database (always flushes)
+  - `delete()`: Remove user from database (always flushes)
+  - `findByEmail()`: Find user by email
+  - `findByUsername()`: Find user by username
+  - `updatePassword()`: Update user password
+  - `enable()`/`disable()`: Enable/disable user account
+  - `updateLastLogin()`: Update last login timestamp
 
-All managers are auto-wired and can be injected into your controllers and services.
+- **RoleManager**: Role CRUD operations
+  - `create()`: Create a new role
+  - `save()`: Persist role to database (always flushes)
+  - `delete()`: Remove role from database (always flushes)
+  - `findByName()`: Find role by name
+  - `getAll()`: Get all roles ordered by name
+
+- **GroupManager**: Group CRUD operations
+  - `create()`: Create a new group
+  - `save()`: Persist group to database (always flushes)
+  - `delete()`: Remove group from database (always flushes)
+  - `findByName()`: Find group by name
+  - `getAll()`: Get all groups ordered by name
+
+All managers are auto-wired and can be injected into your controllers and services using the `#[Autowire]` attribute.
 
 ## Events
 
