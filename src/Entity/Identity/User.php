@@ -1,6 +1,6 @@
 <?php
 
-namespace Fastfony\IdentityBundle\Entity;
+namespace Fastfony\IdentityBundle\Entity\Identity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -13,19 +13,19 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column]
     protected ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[ORM\Column(length: 180, unique: true)]
     protected string $email;
 
-    #[ORM\Column(type: 'string', length: 180, unique: true, nullable: true)]
+    #[ORM\Column(length: 180, unique: true, nullable: true)]
     protected ?string $username = null;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column]
     protected string $password;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column]
     protected bool $enabled = true;
 
     #[ORM\ManyToMany(targetEntity: Role::class, inversedBy: 'users')]
@@ -36,13 +36,13 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinTable(name: 'user_groups')]
     protected Collection $groups;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column]
     protected \DateTimeImmutable $createdAt;
 
-    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[ORM\Column(nullable: true)]
     protected ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[ORM\Column(nullable: true)]
     protected ?\DateTimeImmutable $lastLogin = null;
 
     public function __construct()
@@ -65,6 +65,7 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -76,6 +77,7 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUsername(?string $username): self
     {
         $this->username = $username;
+
         return $this;
     }
 
@@ -92,6 +94,7 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
         return $this;
     }
 
@@ -120,6 +123,7 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeRole(Role $role): self
     {
         $this->roles->removeElement($role);
+
         return $this;
     }
 
@@ -140,6 +144,7 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeGroup(Group $group): self
     {
         $this->groups->removeElement($group);
+
         return $this;
     }
 
@@ -151,6 +156,7 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEnabled(bool $enabled): self
     {
         $this->enabled = $enabled;
+
         return $this;
     }
 
@@ -162,6 +168,7 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
@@ -173,6 +180,7 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
         return $this;
     }
 
@@ -184,6 +192,7 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastLogin(?\DateTimeImmutable $lastLogin): self
     {
         $this->lastLogin = $lastLogin;
+
         return $this;
     }
 

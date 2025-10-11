@@ -1,8 +1,8 @@
 <?php
 
-namespace Fastfony\IdentityBundle\Service;
+namespace Fastfony\IdentityBundle\Manager;
 
-use Fastfony\IdentityBundle\Entity\Role;
+use Fastfony\IdentityBundle\Entity\Identity\Role;
 use Fastfony\IdentityBundle\Repository\RoleRepository;
 
 class RoleManager
@@ -21,7 +21,7 @@ class RoleManager
         if ($description) {
             $role->setDescription($description);
         }
-        
+
         return $role;
     }
 
