@@ -61,7 +61,7 @@ The bundle provides abstract base classes. Extend them in your application:
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Fastfony\IdentityBundle\Entity\User as BaseUser;
+use Fastfony\IdentityBundle\Entity\Identity\User as BaseUser;
 use App\Repository\UserRepository;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -80,7 +80,7 @@ class User extends BaseUser
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Fastfony\IdentityBundle\Entity\Role as BaseRole;
+use Fastfony\IdentityBundle\Entity\Identity\Role as BaseRole;
 use App\Repository\RoleRepository;
 
 #[ORM\Entity(repositoryClass: RoleRepository::class)]
@@ -99,7 +99,7 @@ class Role extends BaseRole
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Fastfony\IdentityBundle\Entity\Group as BaseGroup;
+use Fastfony\IdentityBundle\Entity\Identity\Group as BaseGroup;
 use App\Repository\GroupRepository;
 
 #[ORM\Entity(repositoryClass: GroupRepository::class)]
@@ -209,7 +209,7 @@ php bin/console doctrine:migrations:migrate
 ### User Management
 
 ```php
-use Fastfony\IdentityBundle\Service\UserManager;
+use Fastfony\IdentityBundle\Manager\UserManager;
 
 class YourController
 {
@@ -254,7 +254,7 @@ class YourController
 ### Role Management
 
 ```php
-use Fastfony\IdentityBundle\Service\RoleManager;
+use Fastfony\IdentityBundle\Manager\RoleManager;
 
 class YourController
 {
@@ -288,7 +288,7 @@ class YourController
 ### Group Management
 
 ```php
-use Fastfony\IdentityBundle\Service\GroupManager;
+use Fastfony\IdentityBundle\Manager\GroupManager;
 
 class YourController
 {
@@ -351,15 +351,15 @@ class YourController
 - `roles`: Many-to-many relation with Role
 - `createdAt`: Creation timestamp
 
-## Services
+## Managers
 
-The bundle provides the following services:
+The bundle provides the following manager services:
 
 - **UserManager**: User CRUD operations and password management
 - **RoleManager**: Role CRUD operations
 - **GroupManager**: Group CRUD operations
 
-All services are auto-wired and can be injected into your controllers and services.
+All managers are auto-wired and can be injected into your controllers and services.
 
 ## Events
 
