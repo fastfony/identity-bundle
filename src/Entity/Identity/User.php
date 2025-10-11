@@ -5,12 +5,15 @@ namespace Fastfony\IdentityBundle\Entity\Identity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\MappedSuperclass]
 abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use TimestampableEntity;
+
     protected static string $defaultRole = 'ROLE_USER';
 
     #[ORM\Id]
@@ -38,12 +41,6 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinTable(name: 'user_groups')]
     protected Collection $groups;
 
-    #[ORM\Column]
-    protected \DateTimeImmutable $createdAt;
-
-    #[ORM\Column(nullable: true)]
-    protected ?\DateTimeImmutable $updatedAt = null;
-
     #[ORM\Column(nullable: true)]
     protected ?\DateTimeImmutable $lastLogin = null;
 
@@ -51,7 +48,6 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->roles = new ArrayCollection();
         $this->groups = new ArrayCollection();
-        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -158,30 +154,6 @@ abstract class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEnabled(bool $enabled): self
     {
         $this->enabled = $enabled;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): \DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
 
         return $this;
     }

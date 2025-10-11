@@ -36,19 +36,16 @@ class UserManager
     {
         $hashedPassword = $this->passwordHasher->hashPassword($user, $plainPassword);
         $user->setPassword($hashedPassword);
-        $user->setUpdatedAt(new \DateTimeImmutable());
     }
 
     public function enable(User $user): void
     {
         $user->setEnabled(true);
-        $user->setUpdatedAt(new \DateTimeImmutable());
     }
 
     public function disable(User $user): void
     {
         $user->setEnabled(false);
-        $user->setUpdatedAt(new \DateTimeImmutable());
     }
 
     public function updateLastLogin(User $user): void

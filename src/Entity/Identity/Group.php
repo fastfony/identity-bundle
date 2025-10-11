@@ -5,10 +5,12 @@ namespace Fastfony\IdentityBundle\Entity\Identity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\MappedSuperclass]
 abstract class Group
 {
+    use TimestampableEntity;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -27,14 +29,10 @@ abstract class Group
     #[ORM\JoinTable(name: 'group_roles')]
     protected Collection $roles;
 
-    #[ORM\Column]
-    protected \DateTimeImmutable $createdAt;
-
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->roles = new ArrayCollection();
-        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -108,18 +106,6 @@ abstract class Group
     public function removeRole(Role $role): self
     {
         $this->roles->removeElement($role);
-
-        return $this;
-    }
-
-    public function getCreatedAt(): \DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
 
         return $this;
     }
