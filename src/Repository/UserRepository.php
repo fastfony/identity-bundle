@@ -5,18 +5,22 @@ namespace Fastfony\IdentityBundle\Repository;
 use Fastfony\IdentityBundle\Entity\Identity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
 /**
  * @extends ServiceEntityRepository<User>
  */
-abstract class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
+class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
     use PersistenceTrait;
 
-    public function __construct(ManagerRegistry $registry, string $entityClass)
-    {
+    public function __construct(
+        ManagerRegistry $registry,
+        #[Autowire('%fastfony_identity.user.class%')]
+        string $entityClass
+    ) {
         parent::__construct($registry, $entityClass);
     }
 

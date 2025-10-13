@@ -7,8 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
+#[ORM\Entity]
 #[ORM\MappedSuperclass]
-abstract class Group
+class Group
 {
     use TimestampableEntity;
     #[ORM\Id]

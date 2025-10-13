@@ -38,20 +38,9 @@ return [
 
 ### 2. Configure the Bundle
 
-Create a configuration file `config/packages/fastfony_identity.yaml`:
+If you're using Symfony Flex, the configuration file will be created automatically. Otherwise, manually create it.
 
-```yaml
-fastfony_identity:
-    user:
-        class: 'App\Entity\User'
-    role:
-        class: 'App\Entity\Role'
-        default_role: 'ROLE_USER'
-    group:
-        class: 'App\Entity\Group'
-```
-
-Configure Doctrine Extensions in `config/packages/stof_doctrine_extensions.yaml`:
+Edit Doctrine Extensions in `config/packages/stof_doctrine_extensions.yaml`:
 
 ```yaml
 stof_doctrine_extensions:
@@ -61,9 +50,29 @@ stof_doctrine_extensions:
             timestampable: true
 ```
 
-### 3. Create Your Entities
+### 3. Create Database Schema
 
-The bundle provides abstract base classes. Extend them in your application:
+
+#### Option 1 - With migrations (recommended):
+
+Generate and run migrations to create the database tables:
+
+```bash
+php bin/console doctrine:migrations:diff
+php bin/console doctrine:migrations:migrate
+```
+
+#### Option 2 - Without migrations:
+
+Alternatively, you can create the schema directly:
+
+```bash
+php bin/console doctrine:schema:update --force
+```
+
+### 4. Create Your Entities (optional)
+
+The bundle provides base classes. Extend them in your application if you need custom fields or methods.
 
 **User Entity** (`src/Entity/User.php`):
 
@@ -77,7 +86,6 @@ use Fastfony\IdentityBundle\Entity\Identity\User as BaseUser;
 use App\Repository\UserRepository;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: 'users')]
 class User extends BaseUser
 {
     // Add custom fields here
@@ -97,7 +105,6 @@ use Fastfony\IdentityBundle\Entity\Identity\Role as BaseRole;
 use App\Repository\RoleRepository;
 
 #[ORM\Entity(repositoryClass: RoleRepository::class)]
-#[ORM\Table(name: 'roles')]
 class Role extends BaseRole
 {
     // Add custom fields here
@@ -116,14 +123,29 @@ use Fastfony\IdentityBundle\Entity\Identity\Group as BaseGroup;
 use App\Repository\GroupRepository;
 
 #[ORM\Entity(repositoryClass: GroupRepository::class)]
-#[ORM\Table(name: 'groups')]
 class Group extends BaseGroup
 {
     // Add custom fields here
 }
 ```
 
-### 4. Create Your Repositories
+Configure this new entities in `config/packages/fastfony_identity.yaml` as shown above:
+
+```yaml
+fastfony_identity:
+    user:
+        class: 'App\Entity\User'
+
+    role:
+        class: 'App\Entity\Role'
+
+    group:
+        class: 'App\Entity\Group'
+```
+
+### 5. Create Your Repositories (optional)
+
+Extend base repositories in your application if you need custom methods.
 
 **UserRepository** (`src/Repository/UserRepository.php`):
 
@@ -187,7 +209,7 @@ class GroupRepository extends BaseGroupRepository
 }
 ```
 
-### 5. Update Security Configuration
+### 6. Update Security Configuration
 
 Configure Symfony Security to use your User entity in `config/packages/security.yaml`:
 
@@ -208,15 +230,6 @@ security:
             lazy: true
             provider: app_user_provider
             # Configure your authentication methods here
-```
-
-### 6. Create Database Schema
-
-Run migrations to create the database tables:
-
-```bash
-php bin/console doctrine:migrations:diff
-php bin/console doctrine:migrations:migrate
 ```
 
 ## Usage

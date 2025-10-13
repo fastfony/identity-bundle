@@ -1,0 +1,10 @@
+* Fastfony/IdentityBundle is almost ready:
+
+1. Generate the database tables by running one of the following commands:
+    Option 1 - Generate and run migrations to create the database tables:
+        php bin/console doctrine:migrations:diff
+        php bin/console doctrine:migrations:migrate
+
+    Option 2 - You can create the schema directly
+        php bin/console doctrine:schema:update --force
+2. Enjoy! (you can also read the documentation in <comment>docs/</comment> for more information)

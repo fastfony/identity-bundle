@@ -4,5 +4,14 @@
     },
     "copy-from-recipe": {
         "config/": "%CONFIG_DIR%/"
-    }
+    },
+    "add-lines": [
+        {
+            "file": "config/packages/stof_doctrine_extensions.yaml",
+            "position": "after_target",
+            "target": "    default_locale: en_US",
+            "content": "    orm:\n        default:\n            timestampable: true\n",
+            "warn_if_missing": true
+        }
+    ]
 }

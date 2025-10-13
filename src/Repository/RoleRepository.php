@@ -5,6 +5,7 @@ namespace Fastfony\IdentityBundle\Repository;
 use Fastfony\IdentityBundle\Entity\Identity\Role;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * @extends ServiceEntityRepository<Role>
@@ -13,8 +14,11 @@ abstract class RoleRepository extends ServiceEntityRepository
 {
     use PersistenceTrait;
 
-    public function __construct(ManagerRegistry $registry, string $entityClass)
-    {
+    public function __construct(
+        ManagerRegistry $registry,
+        #[Autowire('%fastfony_identity.role.class%')]
+        string $entityClass
+    ) {
         parent::__construct($registry, $entityClass);
     }
 
