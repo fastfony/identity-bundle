@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 /**
  * @extends ServiceEntityRepository<Role>
  */
-abstract class RoleRepository extends ServiceEntityRepository
+class RoleRepository extends ServiceEntityRepository
 {
     use PersistenceTrait;
 

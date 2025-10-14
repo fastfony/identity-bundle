@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 /**
  * @extends ServiceEntityRepository<Group>
  */
-abstract class GroupRepository extends ServiceEntityRepository
+class GroupRepository extends ServiceEntityRepository
 {
     use PersistenceTrait;
 

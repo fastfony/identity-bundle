@@ -18,7 +18,7 @@ class Group
     protected ?int $id = null;
 
     #[ORM\Column(length: 100, unique: true)]
-    protected string $name;
+    protected ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     protected ?string $description = null;
@@ -41,7 +41,7 @@ class Group
         return $this->id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }

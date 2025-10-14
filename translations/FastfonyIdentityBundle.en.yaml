@@ -1,0 +1,51 @@
+button:
+    login:
+        submit: Sign in
+    forgot_password:
+        submit: Send reset link
+    register:
+        submit: Create account
+    request_login_link:
+        submit: Send login link
+    reset_password:
+        submit: Set new password
+
+label:
+    email: Email
+    password: Password
+
+link:
+    login:
+        create_account: Create an account
+        forgot_password: Forgot your password?
+    register:
+        login: Sign in instead
+
+text:
+    login:
+        no_account: Don't have an account yet?
+    forgot_password:
+        instructions: Enter your email address and we will send you a link to reset your password.
+        link_sent_validity: Check your email for a reset link. The link is valid for %lifetime% minutes.
+    register:
+        already_account: Already have an account?
+        agree_with_terms: By creating an account, you agree to our Terms of Service and Privacy Policy.
+        link_sent_validity: Check your email for a confirmation link. The link is valid for %lifetime% minutes.
+    request_login_link:
+        link_sent_validity: Check your email for a login link. The link is valid for %lifetime% minutes.
+
+title:
+    login:
+        h2: Sign in to your account
+    forgot_password:
+        h2: Reset your password
+    register:
+        h2: Create your account
+    reset_password:
+        h2: Choose a new password
+
+flash:
+    error:
+        login_link_not_sent: We couldn't send the login link. Please try again later.
+    info:
+        already_logged_in: You are already logged in.

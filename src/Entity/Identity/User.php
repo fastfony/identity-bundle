@@ -23,13 +23,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     protected ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    protected string $email;
-
-    #[ORM\Column(length: 180, unique: true, nullable: true)]
-    protected ?string $username = null;
+    protected ?string $email = null;
 
     #[ORM\Column]
-    protected string $password;
+    protected ?string $password = null;
 
     #[ORM\Column]
     protected bool $enabled = true;
@@ -56,41 +53,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
         return $this;
     }
 
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(?string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
     public function getUserIdentifier(): string
     {
-        return $this->email;
+        return (string) $this->email;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(?string $password): self
     {
         $this->password = $password;
 

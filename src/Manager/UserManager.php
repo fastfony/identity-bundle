@@ -6,34 +6,41 @@ use Fastfony\IdentityBundle\Entity\Identity\User;
 use Fastfony\IdentityBundle\Repository\UserRepository;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 class UserManager
 {
     public function __construct(
-        private UserRepository $userRepository,
-        private UserPasswordHasherInterface $passwordHasher,
+        private readonly UserRepository $userRepository,
+        private readonly UserPasswordHasherInterface $passwordHasher,
         #[Autowire('%fastfony_identity.user.class%')]
-        private string $userClass
+        private readonly string $userClass
     ) {
     }
 
-    public function create(string $email, string $plainPassword, ?string $username = null): User
-    {
+    public function create(
+        string $email,
+        ?string $plainPassword = null,
+    ): User {
         $user = new ($this->userClass)();
         
         $user->setEmail($email);
-        if ($username) {
-            $user->setUsername($username);
+
+        if (null === $plainPassword) {
+            // Generate a random password if none is provided
+            $plainPassword = bin2hex(random_bytes(10));
         }
-        
+
         $hashedPassword = $this->passwordHasher->hashPassword($user, $plainPassword);
         $user->setPassword($hashedPassword);
 
         return $user;
     }
 
-    public function updatePassword(User $user, string $plainPassword): void
-    {
+    public function updatePassword(
+        PasswordAuthenticatedUserInterface $user,
+        string $plainPassword
+    ): void {
         $hashedPassword = $this->passwordHasher->hashPassword($user, $plainPassword);
         $user->setPassword($hashedPassword);
     }
@@ -56,11 +63,6 @@ class UserManager
     public function findByEmail(string $email): ?User
     {
         return $this->userRepository->findByEmail($email);
-    }
-
-    public function findByUsername(string $username): ?User
-    {
-        return $this->userRepository->findByUsername($username);
     }
 
     public function save(User $user): void

@@ -9,9 +9,9 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 class GroupManager
 {
     public function __construct(
-        private GroupRepository $groupRepository,
+        private readonly GroupRepository $groupRepository,
         #[Autowire('%fastfony_identity.group.class%')]
-        private string $groupClass
+        private readonly string $groupClass
     ) {
     }
 

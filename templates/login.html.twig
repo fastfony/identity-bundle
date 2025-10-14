@@ -1,0 +1,85 @@
+{% extends '@FastfonyIdentity/layout.html.twig' %}
+
+{% trans_default_domain 'FastfonyIdentityBundle' %}
+
+{% block body %}
+    <!--
+      If you use Tailwindcss 4, this template requires updating your base layout to include the following classes on the <html> and <body> tags:
+
+      ```
+      <html class="h-full bg-gray-50 dark:bg-gray-900">
+      <body class="h-full">
+      ```
+    -->
+    <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
+        <div class="sm:mx-auto sm:w-full sm:max-w-md">
+            <h2 class="mt-6 text-center text-2xl/9 font-bold tracking-tight text-gray-900 dark:text-white">
+                {{ 'title.login.h2'|trans }}
+            </h2>
+        </div>
+
+        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
+            <div class="bg-white px-6 py-12 shadow-sm sm:rounded-lg sm:px-12 dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
+                <form action="{{ path('form_login') }}" method="POST" class="space-y-6">
+                    {% if error is not null %}
+                        <div class="pb-3 text-sm text-error">
+                            {{ error.message|trans({}, 'validators') }}
+                        </div>
+                    {% endif %}
+
+                    <div>
+                        <label for="username" class="block text-sm/6 font-medium text-gray-900 dark:text-white">
+                            {{ 'label.email'|trans }}
+                        </label>
+                        <div class="mt-2">
+                            <input type="email" tabindex="1" required autocomplete="email"
+                                   id="username" name="_username" value="{{ last_username }}"
+                                   class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="password" class="block text-sm/6 font-medium text-gray-900 dark:text-white">
+                            {{ 'label.password'|trans }}
+                        </label>
+                        <div class="mt-2">
+                            <input type="password" tabindex="2" required autocomplete="current-password"
+                                   id="password" name="_password"
+                                   class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500" />
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-end">
+                        <div class="text-sm/6">
+                            <a href="{{ path('forgot_password') }}"
+                               class="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
+                                {{ 'link.login.forgot_password'|trans }}
+                            </a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('login') }}">
+                        <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:shadow-none dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500">
+                            {{ 'button.login.submit'|trans }}
+                        </button>
+                    </div>
+                </form>
+
+                {% block login_other_options %}
+                    {{ include('@FastfonyIdentity/partials/_login_other_options.html.twig') }}
+                {% endblock %}
+            </div>
+
+            {% if registration_enabled %}
+                <p class="mt-10 text-center text-sm/6 text-gray-500 dark:text-gray-400">
+                    {{ 'text.login.no_account'|trans }}
+                    <a href="{{ path('register') }}"
+                       class="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
+                        {{ 'link.login.create_account'|trans }}
+                    </a>
+                </p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

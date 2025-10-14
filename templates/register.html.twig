@@ -1,0 +1,105 @@
+{% extends '@FastfonyIdentity/layout.html.twig' %}
+
+{% trans_default_domain 'FastfonyIdentityBundle' %}
+
+{% block body %}
+    <!--
+      If you use Tailwindcss 4, this template requires updating your base layout to include the following classes on the <html> and <body> tags:
+
+      ```
+      <html class="h-full bg-white dark:bg-gray-900">
+      <body class="h-full">
+      ```
+    -->
+
+    <div class="flex min-h-full">
+        <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+            <div class="mx-auto w-full max-w-sm lg:w-96">
+                <div>
+                    <h2 class="mt-8 text-2xl/9 font-bold tracking-tight text-gray-900 dark:text-white">
+                        {{ 'title.register.h2'|trans }}
+                    </h2>
+                    <p class="mt-2 text-sm/6 text-gray-500 dark:text-gray-400">
+                        {{ 'text.register.already_account'|trans }}
+                        <a href="{{ path('request_login_link') }}"
+                           class="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
+                        >
+                            {{ 'link.register.login'|trans }}
+                        </a>
+                    </p>
+                </div>
+
+                <div class="mt-10">
+                    <div>
+                        {% if form is defined %}
+                            {{ form_start(form, {attr: {class: 'space-y-6'}}) }}
+                                <div>
+                                    {{ form_label(
+                                        form.email,
+                                        'label.email'|trans,
+                                        {label_attr: { class: 'block text-sm/6 font-medium text-gray-900 dark:text-gray-100'}}
+                                    ) }}
+                                    <div class="mt-2">
+                                        {{ form_widget(
+                                            form.email,
+                                            {
+                                                attr: {
+                                                    class: 'block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500',
+                                                    autocomplete: 'email'
+                                                }
+                                            }
+                                        ) }}
+                                        {{ form_errors(form.email) }}
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-3">
+                                    <div class="flex h-6 shrink-0 items-center">
+                                        <div class="group grid size-4 grid-cols-1">
+                                            {{ form_widget(form.agreeWithTerms, {attr: {class: 'col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 dark:border-white/10 dark:bg-white/5 dark:checked:border-indigo-500 dark:checked:bg-indigo-500 dark:indeterminate:border-indigo-500 dark:indeterminate:bg-indigo-500 dark:focus-visible:outline-indigo-500 forced-colors:appearance-auto'}}) }}
+                                            <svg viewBox="0 0 14 14" fill="none" class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25">
+                                                <path d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-0 group-has-checked:opacity-100" />
+                                                <path d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-0 group-has-indeterminate:opacity-100" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    {{ form_label(
+                                        form.agreeWithTerms,
+                                        'text.register.agree_with_terms'|trans|raw,
+                                        {label_attr: {class: 'block text-sm/6 text-gray-900 dark:text-gray-300'}}
+                                    ) }}
+                                </div>
+
+                                <div>
+                                    <button type="submit"
+                                            class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:shadow-none dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500">
+                                        {{ 'button.register.submit'|trans }}
+                                    </button>
+                                </div>
+                            {{ form_end(form) }}
+                        {% else %}
+                            <div class="py-10">
+                                <div class="mx-auto flex size-20 items-center justify-center rounded-full bg-green-100">
+                                    <svg class="size-12 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"></path>
+                                    </svg>
+                                </div>
+
+                                <p class="m-8 text-gray-500">{{ 'text.register.link_sent_validity'|trans({'%lifetime%': lifetime}) }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    {% block login_other_options %}
+                        {{ include('@FastfonyIdentity/partials/_login_other_options.html.twig') }}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+        <div class="relative hidden w-0 flex-1 lg:block">
+            <img alt=""
+                 src="{% block registration_background_image_url %}https://images.unsplash.com/photo-1496917756835-20cb06e75b4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80{% endblock %}"
+                 class="absolute inset-0 size-full object-cover" />
+        </div>
+    </div>
+{% endblock %}

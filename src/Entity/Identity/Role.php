@@ -18,7 +18,7 @@ class Role
     protected ?int $id = null;
 
     #[ORM\Column(length: 50, unique: true)]
-    protected string $name;
+    protected ?string $name = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     protected ?string $description = null;
@@ -36,12 +36,12 @@ class Role
         return $this->id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 

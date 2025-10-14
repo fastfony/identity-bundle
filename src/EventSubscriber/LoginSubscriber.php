@@ -27,7 +27,7 @@ class LoginSubscriber implements EventSubscriberInterface
         
         if ($user instanceof User) {
             $this->userManager->updateLastLogin($user);
-            $this->userManager->saveUser($user, true);
+            $this->userManager->save($user);
         }
     }
 }
