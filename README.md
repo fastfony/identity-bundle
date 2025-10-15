@@ -82,8 +82,8 @@ security:
             provider: fastfony_identity_user_provider
             user_checker: Fastfony\IdentityBundle\Security\UserChecker
             form_login:
-                login_path: login
-                check_path: login
+                login_path: form_login
+                check_path: form_login
                 enable_csrf: true
                 csrf_token_id: login
                 form_only: true
