@@ -60,7 +60,7 @@ To customize the login page, create a file at `templates/bundles/FastfonyIdentit
 You can override the entire template or extend the default one and modify only specific blocks. Here is an example of extending the default template and just changing the other options login block for remove social login buttons sample:
 
 ```twig
-{% extends '@FastfonyIdentity/login.html.twig' %}
+{% extends '@!FastfonyIdentity/login.html.twig' %}
 
 {% block login_other_options %}
     {# No other options #}
@@ -74,7 +74,7 @@ If user registration is enabled in the bundle configuration, you can customize t
 You can override the entire template or extend the default one and modify only specific blocks. Here is an example of extending the default template and just changing the background image url:
 
 ```twig
-{% extends '@FastfonyIdentity/register.html.twig' %}
+{% extends '@!FastfonyIdentity/register.html.twig' %}
 
 {% block registration_background_image_url %}
     {{ asset('images/custom-background.jpg') }}
