@@ -89,6 +89,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         foreach ($this->roles as $role) {
             $roles[] = $role->getName();
         }
+
+        foreach ($this->groups as $group) {
+            foreach ($group->getRoles() as $role) {
+                $roles[] = $role->getName();
+            }
+        }
         
         // Guarantee every user at least has the default role
         $roles[] = static::$defaultRole;
