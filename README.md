@@ -36,8 +36,9 @@ This will automatically install the required dependencies including:
 
 ### 1. Enable the Bundle
 
-If you're using Symfony Flex, the bundle will be automatically enabled. Otherwise, add it to `config/bundles.php`:
+If you're using Symfony Flex and you have play the recipe for the bundle, the bundle will be automatically enabled and config files are created.
 
+Otherwise, add it to `config/bundles.php`:
 ```php
 return [
     // ...
@@ -127,7 +128,7 @@ framework:
             sender: 'noreply@your-website.com'
 ```
 
-(don't forget to set the `MAILER_DSN` environment variable in your `.env` file, more info [here](https://symfony.com/doc/current/mailer.html#transport-setup))
+(don't forget to set the `MAILER_DSN` environment variable in your `.env` file, more info [here](https://symfony.com/doc/current/mailer.html#transport-setup) and configure send messages async or not, more info [here](https://symfony.com/doc/current/mailer.html#sending-messages-async))
 
 ### 3. Create Database Schema
 
