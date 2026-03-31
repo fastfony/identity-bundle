@@ -14,7 +14,9 @@ class UserManager
         private readonly UserRepository $userRepository,
         private readonly UserPasswordHasherInterface $passwordHasher,
         #[Autowire('%fastfony_identity.user.class%')]
-        private readonly string $userClass
+        private readonly string $userClass,
+        #[Autowire('%fastfony_identity.user.require_email_verification%')]
+        private readonly string $requireEmailVerification,
     ) {
     }
 
@@ -33,6 +35,7 @@ class UserManager
 
         $hashedPassword = $this->passwordHasher->hashPassword($user, $plainPassword);
         $user->setPassword($hashedPassword);
+        $user->setEnabled(!$this->requireEmailVerification);
 
         return $user;
     }
