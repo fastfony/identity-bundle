@@ -132,7 +132,6 @@ framework:
 
 ### 3. Create Database Schema
 
-
 #### Option 1 - With migrations (recommended):
 
 Generate and run migrations to create the database tables:
@@ -151,6 +150,12 @@ php bin/console doctrine:schema:update --force
 ```
 
 **It's done!** 🥳 You can now start using the bundle.
+
+### 4. Register your first user
+
+Go to the `/register` route in order to create the first user account.
+
+By default, routes behind /secure-area require the user logged in.
 
 More detailed usage instructions and customizations can be found in the [Documentation](docs/index.md).
 
