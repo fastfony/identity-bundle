@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Fastfony\IdentityBundle\Tests\Manager;
 
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+
 use Fastfony\IdentityBundle\Entity\Identity\User;
 use Fastfony\IdentityBundle\Manager\UserManager;
 use Fastfony\IdentityBundle\Repository\UserRepository;
@@ -12,6 +14,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(UserManager::class)]
 #[CoversClass(User::class)]
 final class UserManagerTest extends TestCase

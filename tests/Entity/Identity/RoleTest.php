@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Fastfony\IdentityBundle\Tests\Entity\Identity;
 
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+
 use Fastfony\IdentityBundle\Entity\Identity\Role;
 use Fastfony\IdentityBundle\Entity\Identity\User;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(Role::class)]
 final class RoleTest extends TestCase
 {

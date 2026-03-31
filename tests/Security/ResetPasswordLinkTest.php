@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Fastfony\IdentityBundle\Tests\Security;
 
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+
 use Fastfony\IdentityBundle\Entity\Identity\User;
 use Fastfony\IdentityBundle\Security\ResetPasswordLink;
 use Fastfony\IdentityBundle\Entity\RequestPassword;
@@ -16,6 +18,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(ResetPasswordLink::class)]
 #[CoversClass(RequestPassword::class)]
 #[CoversClass(User::class)]

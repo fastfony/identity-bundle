@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Fastfony\IdentityBundle\Tests\EventSubscriber;
 
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+
 use Fastfony\IdentityBundle\Entity\Identity\User;
 use Fastfony\IdentityBundle\EventSubscriber\LoginSubscriber;
 use Fastfony\IdentityBundle\Manager\UserManager;
@@ -13,6 +15,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(LoginSubscriber::class)]
 final class LoginSubscriberTest extends TestCase
 {

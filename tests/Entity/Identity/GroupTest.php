@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Fastfony\IdentityBundle\Tests\Entity\Identity;
 
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+
 use Fastfony\IdentityBundle\Entity\Identity\Group;
 use Fastfony\IdentityBundle\Entity\Identity\User;
 use Fastfony\IdentityBundle\Entity\Identity\Role;
@@ -11,6 +13,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Doctrine\Common\Collections\ArrayCollection;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(Group::class)]
 final class GroupTest extends TestCase
 {

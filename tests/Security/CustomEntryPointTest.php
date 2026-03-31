@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Fastfony\IdentityBundle\Tests\Security;
 
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+
 use Fastfony\IdentityBundle\Security\CustomEntryPoint;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -11,6 +13,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(CustomEntryPoint::class)]
 final class CustomEntryPointTest extends TestCase
 {
@@ -19,7 +22,7 @@ final class CustomEntryPointTest extends TestCase
         $router = $this->createMock(RouterInterface::class);
         $router->expects(self::once())
             ->method('generate')
-            ->with('request_login_link')
+            ->with('login_link')
             ->willReturn('/login-link');
 
         $entryPoint = new CustomEntryPoint(

@@ -1,0 +1,64 @@
+{% extends '@FastfonyIdentity/layout.html.twig' %}
+
+{% trans_default_domain 'FastfonyIdentityBundle' %}
+
+{% block body %}
+    <div class="ff-wrapper">
+        <div class="ff-card">
+            <h2 class="ff-title">
+                {{ 'title.login.h2'|trans }}
+            </h2>
+
+            <form action="{{ path('form_login') }}" method="POST">
+                {% if error is not null %}
+                    <div class="ff-alert">
+                        {{ error.message|trans({}, 'validators') }}
+                    </div>
+                {% endif %}
+
+                <div class="ff-form-group">
+                    <label class="ff-label" for="username">
+                        {{ 'label.email'|trans }}
+                    </label>
+                    <input class="ff-input" type="email" tabindex="1" required autocomplete="email" autofocus
+                           id="username" name="_username" value="{{ last_username }}" />
+                </div>
+
+                <div class="ff-form-group">
+                    <label class="ff-label" for="password">
+                        {{ 'label.password'|trans }}
+                    </label>
+                    <input class="ff-input" type="password" tabindex="2" required autocomplete="current-password"
+                           id="password" name="_password" />
+                </div>
+
+                <div class="ff-links-group">
+                    <a class="ff-link" href="{{ path('forgot_password') }}">
+                        {{ 'link.login.forgot_password'|trans }}
+                    </a>
+                    {% if login_link_enabled %}
+                        <a class="ff-link" href="{{ path('login_link') }}">
+                            {{ 'link.login.request_link'|trans }}
+                        </a>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('login') }}">
+                    <button class="ff-btn" type="submit">
+                        {{ 'button.login.submit'|trans }}
+                    </button>
+                </div>
+            </form>
+
+            {% if registration_enabled %}
+                <p class="ff-footer">
+                    {{ 'text.login.no_account'|trans }}
+                    <a class="ff-link" href="{{ path('register') }}">
+                        {{ 'link.login.create_account'|trans }}
+                    </a>
+                </p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

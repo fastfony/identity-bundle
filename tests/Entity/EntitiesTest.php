@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Fastfony\IdentityBundle\Tests\Entity;
 
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+
 use Fastfony\IdentityBundle\Entity\Identity\Group;
 use Fastfony\IdentityBundle\Entity\Identity\Role;
 use Fastfony\IdentityBundle\Entity\Identity\User;
@@ -15,6 +17,7 @@ use ReflectionException;
 use DirectoryIterator;
 use Symfony\Component\Uid\Uuid;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(User::class)]
 #[CoversClass(Group::class)]
 #[CoversClass(Role::class)]

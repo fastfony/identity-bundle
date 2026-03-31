@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Fastfony\IdentityBundle\Tests\Form;
 
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+
 use Fastfony\IdentityBundle\Form\LoginFormType;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Symfony\Component\Form\PreloadedExtension;
@@ -11,6 +13,7 @@ use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(LoginFormType::class)]
 final class LoginFormTypeTest extends TypeTestCase
 {

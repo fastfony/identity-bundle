@@ -5,15 +5,12 @@
 {% block body %}
     <div class="ff-wrapper">
         <div class="ff-card">
-            <h2 class="ff-title-with-back ff-title">
-                <a class="ff-back-link" href="{{ path('form_login') }}" aria-label="{{ 'link.back_to_login'|trans|default('Back to login') }}">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
-                </a>
-                <span>{{ 'title.forgot_password.h2'|trans }}</span>
+            <h2 class="ff-title">
+                {{ 'title.login.h2'|trans }}
             </h2>
 
             {% if form is defined %}
-                {{ form_start(form, {attr: {}}) }}
+                {{ form_start(form) }}
                     <div class="ff-form-group">
                         <label class="ff-label" for="username">
                             {{ 'label.email'|trans }}
@@ -34,13 +31,17 @@
                                 {{ form_errors(form.email) }}
                             </div>
                         </div>
+                    </div>
 
-                        <p class="ff-text-muted">{{ 'text.forgot_password.instructions'|trans }}</p>
+                    <div class="ff-links-group ff-links-group-start">
+                        <a class="ff-link" href="{{ path('form_login') }}">
+                            {{ 'link.request_link.login'|trans }}
+                        </a>
                     </div>
 
                     <div>
                         <button class="ff-btn" type="submit">
-                            {{ 'button.forgot_password.submit'|trans }}
+                            {{ 'button.login_link.submit'|trans }}
                         </button>
                     </div>
                 {{ form_end(form) }}
@@ -52,8 +53,17 @@
                         </svg>
                     </div>
 
-                    <p class="ff-text-sm">{{ 'text.forgot_password.link_sent_validity'|trans({'%lifetime%': lifetime}) }}</p>
+                    <p class="ff-text-sm">{{ 'text.login_link.link_sent_validity'|trans({'%lifetime%': lifetime}) }}</p>
                 </div>
+            {% endif %}
+
+            {% if registration_enabled %}
+                <p class="ff-footer">
+                    {{ 'text.login.no_account'|trans }}
+                    <a class="ff-link" href="{{ path('register') }}">
+                        {{ 'link.request_link.create_account'|trans }}
+                    </a>
+                </p>
             {% endif %}
         </div>
     </div>

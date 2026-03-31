@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Fastfony\IdentityBundle\Tests\Manager;
 
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+
 use Fastfony\IdentityBundle\Entity\Identity\Role;
 use Fastfony\IdentityBundle\Manager\RoleManager;
 use Fastfony\IdentityBundle\Repository\RoleRepository;
@@ -11,6 +13,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(RoleManager::class)]
 #[CoversClass(Role::class)]
 final class RoleManagerTest extends TestCase

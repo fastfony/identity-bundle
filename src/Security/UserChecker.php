@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Fastfony\IdentityBundle\Security;
 
 use Fastfony\IdentityBundle\Entity\Identity\User;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -23,8 +24,10 @@ class UserChecker implements UserCheckerInterface
         }
     }
 
-    public function checkPostAuth(UserInterface $user): void
-    {
+    public function checkPostAuth(
+        UserInterface $user,
+        ?TokenInterface $token = null
+    ): void {
         // Do nothing
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Fastfony\IdentityBundle\Tests\Notifier;
 
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+
 use Fastfony\IdentityBundle\Notifier\CustomLoginLinkNotification;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
@@ -12,6 +14,7 @@ use Symfony\Component\Notifier\Message\EmailMessage;
 use Symfony\Component\Notifier\Recipient\EmailRecipientInterface;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkDetails;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(CustomLoginLinkNotification::class)]
 class CustomLoginLinkNotificationTest extends TestCase
 {

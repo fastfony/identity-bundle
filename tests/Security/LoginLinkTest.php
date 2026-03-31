@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Fastfony\IdentityBundle\Tests\Security;
 
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+
 use Fastfony\IdentityBundle\Entity\Identity\User;
 use Fastfony\IdentityBundle\Notifier\CustomLoginLinkNotification;
 use Fastfony\IdentityBundle\Security\LoginLink;
@@ -25,6 +27,7 @@ use Symfony\Component\Security\Http\LoginLink\LoginLinkDetails;
 use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(LoginLink::class)]
 final class LoginLinkTest extends TestCase
 {

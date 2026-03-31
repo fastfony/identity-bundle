@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Fastfony\IdentityBundle\Tests\Manager;
 
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+
 use Fastfony\IdentityBundle\Entity\Identity\Group;
 use Fastfony\IdentityBundle\Manager\GroupManager;
 use Fastfony\IdentityBundle\Repository\GroupRepository;
@@ -11,6 +13,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(GroupManager::class)]
 #[CoversClass(Group::class)]
 final class GroupManagerTest extends TestCase

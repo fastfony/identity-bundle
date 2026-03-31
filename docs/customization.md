@@ -49,21 +49,21 @@ Thanks to the [Symfony Mailer component](https://symfony.com/doc/current/mailer.
 
 The bundle uses Twig templates for rendering views. You can override these templates by placing your custom versions in the `templates/bundles/FastfonyIdentityBundle/` directory of your Symfony project.
 
-For example, to customize the login page, create a file at `templates/bundles/FastfonyIdentityBundle/security/login.html.twig`.
+For example, to customize the login page, create a file at `templates/bundles/FastfonyIdentityBundle/security/form_login.html.twig`.
 
 In each template, you can override specific blocks to change parts of the content without needing to rewrite the entire template.
 
 ### Login Page
 
-To customize the login page, create a file at `templates/bundles/FastfonyIdentityBundle/login.html.twig`.
+To customize the login page, create a file at `templates/bundles/FastfonyIdentityBundle/form_login.html.twig`.
 
-You can override the entire template or extend the default one and modify only specific blocks. Here is an example of extending the default template and just changing the other options login block for remove social login buttons sample:
+You can override the entire template or extend the default one and modify only specific blocks. Here is an example of extending the default template and changing the body block:
 
 ```twig
-{% extends '@!FastfonyIdentity/login.html.twig' %}
+{% extends '@!FastfonyIdentity/form_login.html.twig' %}
 
-{% block login_other_options %}
-    {# No other options #}
+{% block block %}
+    {# Your custom content #}
 {% endblock %}
 ```
 

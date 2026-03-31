@@ -18,6 +18,8 @@ class RegisterController extends AbstractController
     public function __construct(
         private readonly LoginLink $loginLink,
         private readonly UserManager $userManager,
+        #[Autowire('%fastfony_identity.login.default_method%')]
+        private readonly string $defaultLoginMethod,
         #[Autowire('%fastfony_identity.registration.enabled%')]
         private readonly bool $enabled,
     ) {
@@ -68,6 +70,7 @@ class RegisterController extends AbstractController
             [
                 'form' => $registerForm->createView(),
                 'lifetime' => $this->loginLink->getLifetime(),
+                'default_login_method' => $this->defaultLoginMethod,
             ]
         );
     }

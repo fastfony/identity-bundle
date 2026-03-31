@@ -16,9 +16,9 @@ final class CustomEntryPoint implements AuthenticationEntryPointInterface
     public function __construct(
         private readonly RouterInterface $router,
         #[Autowire('%fastfony_identity.login_link.enabled%')]
-        private readonly bool            $loginLinkEnabled,
-        #[Autowire('%fastfony_identity.login.default_method')]
-        private readonly string          $defaultLoginMethod,
+        private readonly bool $loginLinkEnabled,
+        #[Autowire('%fastfony_identity.login.default_method%')]
+        private readonly string $defaultLoginMethod,
     ) {
     }
 
@@ -29,7 +29,7 @@ final class CustomEntryPoint implements AuthenticationEntryPointInterface
         $route = match ($this->defaultLoginMethod) {
             // Only if login link is enabled, otherwise fallback to form login
             'login_link' => $this->router->generate(
-                $this->loginLinkEnabled ? 'request_login_link' : 'form_login',
+                $this->loginLinkEnabled ? 'login_link' : 'form_login',
             ),
             default => $this->router->generate('form_login'),
         };

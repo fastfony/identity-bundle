@@ -25,7 +25,7 @@ class RequestLoginLinkController extends AbstractController
     ) {
     }
 
-    #[Route('/request-login-link', name: 'request_login_link')]
+    #[Route('/request-login-link', name: 'login_link')]
     public function __invoke(Request $request): Response
     {
         if (!$this->loginLinkEnabled) {
@@ -57,7 +57,7 @@ class RequestLoginLinkController extends AbstractController
 
             // We always redirect to the confirm message to avoid user enumeration
             return $this->render(
-                '@FastfonyIdentity/request_login_link.html.twig',
+                '@FastfonyIdentity/login_link.html.twig',
                 [
                     'registration_enabled' => $this->registrationEnabled,
                     'lifetime' => $this->loginLink->getLifetime(),
@@ -67,7 +67,7 @@ class RequestLoginLinkController extends AbstractController
         }
 
         return $this->render(
-            '@FastfonyIdentity/request_login_link.html.twig',
+            '@FastfonyIdentity/login_link.html.twig',
             [
                 'form' => $loginForm->createView(),
                 'registration_enabled' => $this->registrationEnabled,

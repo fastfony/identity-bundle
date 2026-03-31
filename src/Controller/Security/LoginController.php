@@ -15,6 +15,8 @@ class LoginController extends AbstractController
     public function __construct(
         #[Autowire('%fastfony_identity.registration.enabled%')]
         private readonly bool $registrationEnabled,
+        #[Autowire('%fastfony_identity.login_link.enabled%')]
+        private readonly bool $loginLinkEnabled,
     ) {
     }
 
@@ -23,11 +25,12 @@ class LoginController extends AbstractController
         AuthenticationUtils $authenticationUtils,
     ): Response {
         return $this->render(
-            '@FastfonyIdentity/login.html.twig',
+            '@FastfonyIdentity/form_login.html.twig',
             [
                 'last_username' => $authenticationUtils->getLastUsername(),
                 'error' => $authenticationUtils->getLastAuthenticationError(),
                 'registration_enabled' => $this->registrationEnabled,
+                'login_link_enabled' => $this->loginLinkEnabled
             ],
         );
     }

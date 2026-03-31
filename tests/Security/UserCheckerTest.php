@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Fastfony\IdentityBundle\Tests\Security;
 
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
+
 use Fastfony\IdentityBundle\Entity\Identity\User;
 use Fastfony\IdentityBundle\Security\UserChecker;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -11,6 +13,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(UserChecker::class)]
 #[CoversClass(User::class)]
 final class UserCheckerTest extends TestCase
