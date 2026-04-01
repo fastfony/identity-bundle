@@ -13,8 +13,6 @@ class UserManager
     public function __construct(
         private readonly UserRepository $userRepository,
         private readonly UserPasswordHasherInterface $passwordHasher,
-        #[Autowire('%fastfony_identity.user.class%')]
-        private readonly string $userClass,
         #[Autowire('%fastfony_identity.user.require_email_verification%')]
         private readonly string $requireEmailVerification,
     ) {
@@ -24,7 +22,7 @@ class UserManager
         string $email,
         ?string $plainPassword = null,
     ): User {
-        $user = new ($this->userClass)();
+        $user = new User();
         
         $user->setEmail($email);
 

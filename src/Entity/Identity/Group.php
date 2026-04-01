@@ -9,7 +9,6 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity]
 #[ORM\Table(name: '`group`')]
-#[ORM\MappedSuperclass]
 class Group
 {
     use TimestampableEntity;

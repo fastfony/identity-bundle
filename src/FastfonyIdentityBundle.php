@@ -18,10 +18,6 @@ class FastfonyIdentityBundle extends AbstractBundle
                 ->arrayNode('user')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('class')
-                            ->defaultValue('Fastfony\\IdentityBundle\\Entity\\Identity\\User')
-                            ->info('The User entity class')
-                        ->end()
                         ->booleanNode('require_email_verification')
                             ->defaultFalse()
                             ->info('Require email verification for new users')
@@ -144,7 +140,6 @@ class FastfonyIdentityBundle extends AbstractBundle
         ContainerConfigurator $container
     ): void {
         $parameters = [
-            'fastfony_identity.user.class' => $config['user']['class'],
             'fastfony_identity.user.require_email_verification' => $config['user']['require_email_verification'],
             'fastfony_identity.role.class' => $config['role']['class'],
             'fastfony_identity.role.default_role' => $config['role']['default_role'],

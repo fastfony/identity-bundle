@@ -7,5 +7,4 @@ The basis:
 
 To learn more:
 
-* [Create your own entities](create-your-entities.md)
 * [Miscellaneous: entity structre, usage of managers, events...](miscellaneous.md)

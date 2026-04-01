@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity]
-#[ORM\MappedSuperclass]
 class Role
 {
     use TimestampableEntity;

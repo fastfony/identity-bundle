@@ -18,10 +18,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function __construct(
         ManagerRegistry $registry,
-        #[Autowire('%fastfony_identity.user.class%')]
-        string $entityClass
     ) {
-        parent::__construct($registry, $entityClass);
+        parent::__construct($registry, User::class);
     }
 
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
