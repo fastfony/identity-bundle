@@ -36,7 +36,7 @@ This will automatically install the required dependencies including:
 
 ### 1. Enable the Bundle
 
-If you're using Symfony Flex and you have play the recipe for the bundle, the bundle will be automatically enabled and config files are created.
+If you're using Symfony Flex and you have play the recipe for the bundle, the bundle will be automatically enabled and config files will be created and you can directly read the section [Use the Bundle](#use-the-bundle).
 
 Otherwise, add it to `config/bundles.php`:
 ```php
@@ -47,90 +47,13 @@ return [
 ];
 ```
 
-### 2. Configuration (if you didn't use Flex)
+### 2. Configuration
 
-If you're using Symfony Flex, the configuration file will be created automatically. 
-Otherwise, manually do it:
+If you don't use Symfony Flex, see [Configuration](docs/configuration.md) for the configuration of the bundle.
 
-Create or edit Doctrine Extensions config file in `config/packages/stof_doctrine_extensions.yaml`:
+## Use the bundle
 
-```yaml
-stof_doctrine_extensions:
-    default_locale: en_US
-    orm:
-        default:
-            timestampable: true
-```
-
-Edit security settings in `config/packages/security.yaml` for add the firewall, an user provider and a new access control rule:
-
-```yaml
-security:
-    # ...
-    providers:
-        # ...
-        fastfony_identity_user_provider:
-            entity:
-                class: Fastfony\IdentityBundle\Entity\Identity\User
-                property: email
-
-    # ...
-    firewalls:
-        dev:
-            # ...
-        fastfony_identity:
-            lazy: true
-            provider: fastfony_identity_user_provider
-            user_checker: Fastfony\IdentityBundle\Security\UserChecker
-            form_login:
-                login_path: form_login
-                check_path: form_login
-                enable_csrf: true
-                csrf_token_id: login
-                form_only: true
-            login_link:
-                check_route: login_check
-                signature_properties: [ id, email ]
-                max_uses: 3
-            entry_point: Fastfony\IdentityBundle\Security\CustomEntryPoint
-            remember_me:
-                always_remember_me: true
-                signature_properties: [ 'id', 'email', 'password' ]
-            switch_user: true
-            login_throttling:
-                max_attempts: 3
-            logout:
-                path: /logout
-                clear_site_data:
-                    - cookies
-                    - storage
-        # ... (here your other firewalls)
-
-    access_control:
-        # ...
-        - { path: ^/secure-area/, roles: ROLE_USER } # Adjust as needed
-```
-
-Import the bundle routing in `config/routes/fastfony_identity.yaml`:
-
-```yaml
-fastfony_identity:
-    resource: "@FastfonyIdentityBundle/config/routes/all.yaml"
-```
-
-Configure the default sender email address in `config/packages/mailer.yaml`:
-
-```yaml
-framework:
-    mailer:
-        dsn: '%env(MAILER_DSN)%'
-        envelope:
-            sender: 'noreply@your-website.com'
-```
-
-(don't forget to set the `MAILER_DSN` environment variable in your `.env` file, more info [here](https://symfony.com/doc/current/mailer.html#transport-setup) and configure send messages async or not, more info [here](https://symfony.com/doc/current/mailer.html#sending-messages-async))
-
-### 3. Create Database Schema
+### 1. Create Database Schema
 
 #### Option 1 - With migrations (recommended):
 
@@ -151,11 +74,21 @@ php bin/console doctrine:schema:update --force
 
 **It's done!** 🥳 You can now start using the bundle.
 
-### 4. Register your first user
+### 2. Register your first user
 
-Go to the `/register` route in order to create the first user account.
+#### Option 1 - With command:
 
-By default, routes behind /secure-area require the user logged in.
+```bash
+php bin/console fastfony:user:create
+```
+
+#### Option 2 - With your browser:
+
+Go to the `/register` route in order to create the first user account, be sure that your MAILER_DSN is correctly configure and sending messages async is disabled (or your messages consumer command is running) for receive the login link e-mail.
+
+### 3. Usage
+
+By default, routes behind /secure-area require the user logged in (you can change that in `config/packages/security.yaml`).
 
 More detailed usage instructions and customizations can be found in the [Documentation](docs/index.md).
 
