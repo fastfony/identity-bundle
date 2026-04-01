@@ -40,10 +40,12 @@ security:
                 enable_csrf: true
                 csrf_token_id: login
                 form_only: true
+                default_target_path: fastfony_identity_secure_area
             login_link:
                 check_route: login_check
                 signature_properties: [ id, email ]
                 max_uses: 3
+                default_target_path: fastfony_identity_secure_area
             entry_point: Fastfony\IdentityBundle\Security\CustomEntryPoint
             remember_me:
                 always_remember_me: true
