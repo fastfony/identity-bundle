@@ -15,6 +15,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class RequestLoginLinkController extends AbstractController
 {
+    use AlreadyLoggedInTrait;
+
     public function __construct(
         private readonly LoginLink $loginLink,
         private readonly UserRepository $userRepository,
@@ -30,10 +32,6 @@ class RequestLoginLinkController extends AbstractController
     {
         if (!$this->loginLinkEnabled) {
             return $this->redirectToRoute('form_login');
-        }
-
-        if ($this->getUser()) {
-            $this->addFlash('info', 'flash.info.already_logged_in');
         }
 
         $loginForm = $this->createForm(LoginFormType::class);
@@ -66,7 +64,7 @@ class RequestLoginLinkController extends AbstractController
             );
         }
 
-        return $this->render(
+        return $this->redirectIfAlreadyLoggedIn() ?? $this->render(
             '@FastfonyIdentity/login_link.html.twig',
             [
                 'form' => $loginForm->createView(),

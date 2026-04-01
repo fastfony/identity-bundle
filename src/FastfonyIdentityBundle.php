@@ -105,7 +105,7 @@ class FastfonyIdentityBundle extends AbstractBundle
                             ->info('Lifetime of the password reset token in seconds')
                         ->end()
                         ->scalarNode('redirect_route')
-                            ->defaultValue('app_homepage')
+                            ->defaultValue('fastfony_identity_secure_area')
                             ->info('Route to redirect after password reset.')
                     ->end()
                 ->end()

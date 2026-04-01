@@ -29,12 +29,13 @@ fastfony_identity:
         email_content: 'Click on the button below to reset your password.' # Content of the email sent with the password reset link (text or translation key)
         email_action_text: 'Reset my password' # Text of the action button in the email sent with the password reset link (text or translation key)
         lifetime: 900  # Lifetime of the password reset token in seconds (default: 900 seconds = 15 minutes)
-        redirect_route: app_homepage  # Route to redirect to after a successful password reset (default: app_homepage)
+        redirect_route: fastfony_identity_secure_area  # Route to redirect to after a successful password reset (default: fastfony_identity_secure_area)
 ```
 
 Other configuration options are always available:
 
 Thanks to the [Symfony Security component](https://symfony.com/doc/current/security.html) you can customize security parameters in the `config/packages/security.yaml` file. Here is a non-exhaustive list of options you can set there:
+* [redirecting after login](https://symfony.com/doc/current/security/form_login.html#redirecting-after-success)
 * [login link max uses and lifetime](https://symfony.com/doc/current/security/login_link.html#configure-a-maximum-use-of-a-link)
 * [lifetime and activation remember me](https://symfony.com/doc/current/security/remember_me.html)
 * [limiting login attemps](https://symfony.com/doc/current/security.html#limiting-login-attempts)

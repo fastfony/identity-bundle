@@ -14,6 +14,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ForgotPasswordController extends AbstractController
 {
+    use AlreadyLoggedInTrait;
+
     public function __construct(
         private readonly ResetPasswordLink $resetPasswordLink,
         private readonly UserRepository $userRepository,
@@ -52,7 +54,7 @@ class ForgotPasswordController extends AbstractController
             );
         }
 
-        return $this->render(
+        return $this->redirectIfAlreadyLoggedIn() ?? $this->render(
             '@FastfonyIdentity/forgot_password.html.twig',
             [
                 'form' => $requestPasswordForm->createView(),

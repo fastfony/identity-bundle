@@ -15,6 +15,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class RegisterController extends AbstractController
 {
+    use AlreadyLoggedInTrait;
+
     public function __construct(
         private readonly LoginLink $loginLink,
         private readonly UserManager $userManager,
@@ -65,7 +67,7 @@ class RegisterController extends AbstractController
             }
         }
 
-        return $this->render(
+        return $this->redirectIfAlreadyLoggedIn() ?? $this->render(
             '@FastfonyIdentity/register.html.twig',
             [
                 'form' => $registerForm->createView(),

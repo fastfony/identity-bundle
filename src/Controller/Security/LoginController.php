@@ -12,6 +12,8 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
 {
+    use AlreadyLoggedInTrait;
+
     public function __construct(
         #[Autowire('%fastfony_identity.registration.enabled%')]
         private readonly bool $registrationEnabled,
@@ -24,7 +26,7 @@ class LoginController extends AbstractController
     public function __invoke(
         AuthenticationUtils $authenticationUtils,
     ): Response {
-        return $this->render(
+        return $this->redirectIfAlreadyLoggedIn() ?? $this->render(
             '@FastfonyIdentity/form_login.html.twig',
             [
                 'last_username' => $authenticationUtils->getLastUsername(),

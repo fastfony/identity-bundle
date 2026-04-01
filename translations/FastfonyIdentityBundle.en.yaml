@@ -24,6 +24,7 @@ link:
     request_link:
         create_account: Create an account
         login: Sign in with password
+    back_to_login: Sign in
 
 text:
     login:
