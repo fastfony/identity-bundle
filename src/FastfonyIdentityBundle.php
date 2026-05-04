@@ -27,22 +27,9 @@ class FastfonyIdentityBundle extends AbstractBundle
                 ->arrayNode('role')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('class')
-                            ->defaultValue('Fastfony\\IdentityBundle\\Entity\\Identity\\Role')
-                            ->info('The Role entity class')
-                        ->end()
                         ->scalarNode('default_role')
                             ->defaultValue('ROLE_USER')
                             ->info('Default role for new users')
-                        ->end()
-                    ->end()
-                ->end()
-                ->arrayNode('group')
-                    ->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('class')
-                            ->defaultValue('Fastfony\\IdentityBundle\\Entity\\Identity\\Group')
-                            ->info('The Group entity class')
                         ->end()
                     ->end()
                 ->end()
@@ -141,9 +128,7 @@ class FastfonyIdentityBundle extends AbstractBundle
     ): void {
         $parameters = [
             'fastfony_identity.user.require_email_verification' => $config['user']['require_email_verification'],
-            'fastfony_identity.role.class' => $config['role']['class'],
             'fastfony_identity.role.default_role' => $config['role']['default_role'],
-            'fastfony_identity.group.class' => $config['group']['class'],
             'fastfony_identity.registration.enabled' => $config['registration']['enabled'],
             'fastfony_identity.login.default_method' => $config['login']['default_method'],
             'fastfony_identity.login_link.enabled' => $config['login_link']['enabled'],

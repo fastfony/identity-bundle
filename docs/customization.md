@@ -10,12 +10,7 @@ Here is an example configuration file with possible options:
 ```yaml
 fastfony_identity:
     user:
-        class: App\Entity\User  # Your own User entity class (if you don't want to use the default one)
         require_email_verification: true  # Require email verification for new users (default: false)
-    role:
-        class: App\Entity\Role  # Your own Role entity class (if you don't want to use the default one)
-    group:
-        class: App\Entity\Group  # Your own Group entity class (if you don't want to use the default one)
     registration:
         enabled: true  # Enable or disable user registration (default: false)
     login:

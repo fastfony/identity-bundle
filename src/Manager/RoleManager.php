@@ -4,20 +4,17 @@ namespace Fastfony\IdentityBundle\Manager;
 
 use Fastfony\IdentityBundle\Entity\Identity\Role;
 use Fastfony\IdentityBundle\Repository\RoleRepository;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class RoleManager
 {
     public function __construct(
-        private RoleRepository $roleRepository,
-        #[Autowire('%fastfony_identity.role.class%')]
-        private string $roleClass
+        private readonly RoleRepository $roleRepository,
     ) {
     }
 
     public function create(string $name, ?string $description = null): Role
     {
-        $role = new ($this->roleClass)();
+        $role = new Role();
         
         $role->setName($name);
         if ($description) {

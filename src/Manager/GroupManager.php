@@ -4,20 +4,17 @@ namespace Fastfony\IdentityBundle\Manager;
 
 use Fastfony\IdentityBundle\Entity\Identity\Group;
 use Fastfony\IdentityBundle\Repository\GroupRepository;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class GroupManager
 {
     public function __construct(
         private readonly GroupRepository $groupRepository,
-        #[Autowire('%fastfony_identity.group.class%')]
-        private readonly string $groupClass
     ) {
     }
 
     public function create(string $name, ?string $description = null): Group
     {
-        $group = new ($this->groupClass)();
+        $group = new Group();
         
         $group->setName($name);
         if ($description) {

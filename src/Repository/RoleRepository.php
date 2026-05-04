@@ -5,7 +5,6 @@ namespace Fastfony\IdentityBundle\Repository;
 use Fastfony\IdentityBundle\Entity\Identity\Role;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * @extends ServiceEntityRepository<Role>
@@ -16,10 +15,8 @@ class RoleRepository extends ServiceEntityRepository
 
     public function __construct(
         ManagerRegistry $registry,
-        #[Autowire('%fastfony_identity.role.class%')]
-        string $entityClass
     ) {
-        parent::__construct($registry, $entityClass);
+        parent::__construct($registry, Role::class);
     }
 
     public function findByName(string $name): ?Role
