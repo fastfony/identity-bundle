@@ -54,3 +54,7 @@ flash:
         login_link_not_sent: We couldn't send the login link. Please try again later.
     info:
         already_logged_in: You are already logged in.
+
+error:
+    login:
+        empty_credentials: Please fill in your email address and password.

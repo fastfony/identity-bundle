@@ -18,16 +18,35 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[CoversClass(User::class)]
 final class UserCheckerTest extends TestCase
 {
-    public function testCheckPreAuth(): void
+    public function testCheckPreAuthThrowsWhenDisabledUserHasAlreadyLoggedIn(): void
+    {
+        $userChecker = new UserChecker();
+        $user = (new User())
+            ->setEnabled(false)
+            ->setLastLogin(new \DateTimeImmutable());
+
+        $this->expectException(CustomUserMessageAccountStatusException::class);
+        $userChecker->checkPreAuth($user);
+    }
+
+    public function testCheckPreAuthEnablesDisabledUserWithoutLastLogin(): void
     {
         $userChecker = new UserChecker();
         $user = (new User())->setEnabled(false);
-        $this->expectException(CustomUserMessageAccountStatusException::class);
+
         $userChecker->checkPreAuth($user);
 
+        $this->assertTrue($user->isEnabled());
+    }
+
+    public function testCheckPreAuthDoesNothingForEnabledUser(): void
+    {
+        $userChecker = new UserChecker();
         $user = (new User())->setEnabled(true);
-        // No exception should be thrown
+
         $userChecker->checkPreAuth($user);
+
+        $this->assertTrue($user->isEnabled());
     }
 
     public function testCheckPreAuthWithUnsupportedUser(): void

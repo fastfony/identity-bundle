@@ -32,7 +32,7 @@ final class UserManagerTest extends TestCase
         $this->userManager = new UserManager(
             userRepository: $this->userRepository,
             passwordHasher: $this->passwordHasher,
-            userClass: User::class,
+            requireEmailVerification: '0',
         );
     }
 

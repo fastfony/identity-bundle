@@ -28,7 +28,6 @@ final class RoleManagerTest extends TestCase
         $this->roleRepository = $this->createMock(RoleRepository::class);
         $this->roleManager = new RoleManager(
             roleRepository: $this->roleRepository,
-            roleClass: Role::class,
         );
     }
 

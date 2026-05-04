@@ -28,7 +28,6 @@ final class GroupManagerTest extends TestCase
         $this->groupRepository = $this->createMock(GroupRepository::class);
         $this->groupManager = new GroupManager(
             groupRepository: $this->groupRepository,
-            groupClass: Group::class,
         );
     }
 
